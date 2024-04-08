@@ -20,10 +20,12 @@ def main():
   os.chdir(notesDirectory)
 
   docxDirectory = os.path.join(os.getcwd(), 'Typed')
+  epubDirectory = os.path.join(os.getcwd(), 'EPUBs')
   mdDirectory = os.path.join(os.getcwd(), 'Markdown')
   mediaDirectory = os.path.join(mdDirectory, 'Media')
 
   os.makedirs(docxDirectory, exist_ok=True)
+  os.makedirs(epubDirectory, exist_ok=True)
   os.makedirs(mdDirectory, exist_ok=True)
   os.makedirs(mediaDirectory, exist_ok=True)
 
@@ -38,9 +40,10 @@ def main():
 
     docxToMd(filename, mdDirectory, docxDirectory, mediaDirectory)
     os.chdir(codeDirectory)
-    # extractEmbeddedFiles(filename, docxDirectory, mdDirectory, mediaDirectory)
+    extractEmbeddedFiles(filename, docxDirectory, mdDirectory, mediaDirectory)
     os.chdir(notesDirectory)
     replaceText(mdDirectory, filename, mediaDirectory)
+    mdToEpub(mdDirectory, epubDirectory, filename)
 
 def docxToMd(filename, mdDirectory, docxDirectory, mediaDirectory):
   print(f"Converting {filename}.docx to markdown...")
@@ -107,10 +110,24 @@ def replaceText(mdDirectory, filename, mediaDirectory):
   mdText = MDFormatter.formatLists(mdText)
   mdText = MDFormatter.removeUnnumbered(mdText)
 
-  with open(os.path.join(mdDirectory, filename + '-new' + '.md'), 'w') as file:
+  with open(os.path.join(mdDirectory, filename + '.md'), 'w') as file:
     file.write(mdText)
 
+def mdToEpub(mdDirectory, epubDirectory, filename):
+  print(f"Converting {filename}.md to {filename}.epub...")
 
+  mdFilePath = os.path.join(mdDirectory, filename + '.md')
+  epubFilePath = os.path.join(epubDirectory, filename + '.epub')
+
+  # Convert the markdown file to epub
+  args = [
+      'pandoc',
+      mdFilePath,
+      '-o',
+      epubFilePath]
+  subprocess.Popen(args)
+
+  print(f"Converted {filename}.md to {filename}.epub")
 
 if __name__ == '__main__':
   main()

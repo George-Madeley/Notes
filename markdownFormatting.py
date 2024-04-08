@@ -70,3 +70,18 @@ class MDFormatter:
     Replaces all tabs with spaces.
     """
     return text.replace('\t', '  ')
+  
+  @staticmethod
+  def formatLists(text):
+    """
+    Formats the lists in the text.
+    """
+    listRegex = r'\n-\s+'
+    text = re.sub(listRegex, '\n- ', text)
+
+    listRegex = r'\n\d\.\s+'
+    # Replace all instances of listRegex with a newline followed by the same
+    # number and a period and a space
+    text = re.sub(listRegex, '\n1. ', text)
+
+    return text

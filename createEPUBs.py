@@ -92,17 +92,13 @@ def replaceText(mdDirectory, filename, mediaDirectory):
 
     # Replace \xa0 with \t
     odtText = MDFormatter.formatTabs(odtText)
-
-    if "export const useToggle" in odtText:
-      print("Found")
-
+    language = 'text'
+    
     # Get ht odtFile name without the extension
     odtFileName = odtFile.split('.')[0]
     searchText = f'![]({mediaDirectory}/media/image{odtFileName}.emf)'
     
-    replacementText = '```\n' + odtText + '```\n'
-    if searchText in mdText:
-      print(f"Found Text")
+    replacementText = '```' + language + '\n' + odtText + '```\n'
     mdText = mdText.replace(searchText, replacementText)
 
   mdText = MDFormatter.formatContents(mdText)

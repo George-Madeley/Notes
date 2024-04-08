@@ -27,7 +27,7 @@ def main():
   os.makedirs(mdDirectory, exist_ok=True)
   os.makedirs(mediaDirectory, exist_ok=True)
 
-  docxFiles = ['GM01613 - React.docx']
+  docxFiles = ['GM01613 - React.docx', 'GM01614 - Redux.docx']
 
   for docxFile in docxFiles:
     filename = docxFile.split('.')[:-1]
@@ -105,6 +105,7 @@ def replaceText(mdDirectory, filename, mediaDirectory):
   mdText = MDFormatter.formatNewLines(mdText)
   mdText = MDFormatter.replaceTabWithSpace(mdText)
   mdText = MDFormatter.formatLists(mdText)
+  mdText = MDFormatter.removeUnnumbered(mdText)
 
   with open(os.path.join(mdDirectory, filename + '-new' + '.md'), 'w') as file:
     file.write(mdText)

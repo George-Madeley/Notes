@@ -108,6 +108,7 @@ def replaceText(mdDirectory, filename, mediaDirectory):
   mdText = MDFormatter.formatContents(mdText)
   mdText = MDFormatter.formatNewLines(mdText)
   mdText = MDFormatter.replaceTabWithSpace(mdText)
+  mdText = MDFormatter.formatLists(mdText)
 
   with open(os.path.join(mdDirectory, filename + '-new' + '.md'), 'w') as file:
     file.write(mdText)

@@ -63,3 +63,10 @@ class MDFormatter:
     Replaces all instances of three or more consecutive newlines with two newlines.
     """
     return re.sub(r'\n{3,}', '\n\n', text)
+  
+  @staticmethod
+  def replaceTabWithSpace(text):
+    """
+    Replaces all tabs with spaces.
+    """
+    return text.replace('\t', '  ')

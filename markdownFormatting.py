@@ -55,6 +55,11 @@ class MDFormatter:
         # Replace the old match with the new match
         text = text.replace(match, newMatch)
 
+    tocRegex = re.compile(r'#_Toc[0-9]+')
+    matches = tocRegex.findall(text)
+    for match in matches:
+      text = text.replace(match, '#contents')
+
     return text
   
   @staticmethod
@@ -83,5 +88,17 @@ class MDFormatter:
     # Replace all instances of listRegex with a newline followed by the same
     # number and a period and a space
     text = re.sub(listRegex, '\n1. ', text)
+
+    return text
+  
+  @staticmethod
+  def removeUnnumbered(text):
+    """
+    Removes the .unnumbered text from headings.
+    """
+    unnumberedRegex = re.compile(r'\s\{#[A-Za-z]+\s\.unnumbered\}')
+    matches = unnumberedRegex.findall(text)
+    for match in matches:
+      text = text.replace(match, '')
 
     return text

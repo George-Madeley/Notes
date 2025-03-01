@@ -2,11 +2,13 @@ import os
 import subprocess
 import argparse
 import sys
+import tempfile
 
 from odf import text as odf_text, teletype
 from odf.opendocument import load as odf_load
 
 from utils import chdir
+from run_macro import run_macros, open_word, close_word
 
 from formatter import Markdown_Formatter
 
@@ -26,6 +28,17 @@ def main():
       "Typed",
     )
     output_directory = os.path.abspath(os.path.join(path, "..", "output"))
+    pandoc = os.path.abspath(
+      os.path.join(
+        tempfile.gettempdir(),
+        "..",
+        "..",
+        "Roaming",
+        "local",
+        "bin",
+        "pandoc.exe",
+      )
+    )
 
   parser = argparse.ArgumentParser(
     description="""
@@ -51,6 +64,13 @@ def main():
     type=str,
     default=output_directory,
   )
+  parser.add_argument(
+    "--pandoc",
+    help=f"Path to the pandoc executable (default: {pandoc})",
+    nargs="?",
+    type=str,
+    default=pandoc,
+  )
   args = parser.parse_args()
 
   if args.input_paths != input_paths:
@@ -68,29 +88,23 @@ def main():
   if not os.path.exists(args.out_directory):
     os.makedirs(args.out_directory, exist_ok=True)
 
+  convertFiles(args)
+
 
 def convertFiles(args):
   docx_files = get_docx_files(args)
 
-  typed_dir = os.path.join(args.out_directory, "typed")
-  md_dir = os.path.join(args.out_directory, "markdown")
-  os.makedirs(typed_dir, exist_ok=True)
-  os.makedirs(md_dir, exist_ok=True)
-
   for docx_file in docx_files:
     filename = os.path.basename(docx_file).split(".")[0]
 
-    file_dir = os.path.join(md_dir, filename)
-    media_dir = os.path.join(file_dir, "media")
-
+    file_dir = os.path.join(args.out_directory, filename)
     os.makedirs(file_dir, exist_ok=True)
-    os.makedirs(media_dir, exist_ok=True)
 
     out_file_path = os.path.join(file_dir, filename + ".md")
 
-    docx_to_md(docx_file, out_file_path, media_dir)
-    extract_embedded_files(docx_file)
-    add_embedded_file_content(out_file_path, media_dir)
+    docx_to_md(args, docx_file, out_file_path, file_dir)
+    extract_embedded_files(docx_file, file_dir)
+    add_embedded_file_content(out_file_path, file_dir)
     remove_done_file(filename, os.path.dirname(docx_file))
 
 
@@ -122,15 +136,19 @@ def get_docx_files(args):
   return files
 
 
-def docx_to_md(input_file_path, out_file_path, media_dir):
-  print(f"Converting {input_file_path} to markdown...")
+def docx_to_md(args, input_file_path, out_file_path, file_dir):
+  print(f"Converting {os.path.basename(input_file_path)} to markdown...")
+
+  if not os.path.exists(args.pandoc):
+    print(f"Cannot find {args.pandoc}")
+    sys.exit(1)
 
   try:
-    subprocess.Popen(
+    subprocess.run(
       [
         "pandoc",
         "--extract-media",
-        media_dir,
+        file_dir,
         input_file_path,
         "-o",
         out_file_path,
@@ -138,14 +156,14 @@ def docx_to_md(input_file_path, out_file_path, media_dir):
       check=True,
     )
   except subprocess.CalledProcessError:
-    print(f"Error converting {input_file_path} to markdown")
+    print(f"Error converting {os.path.basename(input_file_path)} to markdown")
     return
   print("Done!")
 
 
-def extract_embedded_files(file_path):
+def extract_embedded_files(file_path, file_dir):
   path = chdir()
-  print(f"Extracting embedded files from {file_path}...")
+  print(f"Extracting embedded files from {os.path.basename(file_path)}...")
   if not os.path.exists(file_path):
     print(f"Cannot find {file_path}.docx")
     return
@@ -156,17 +174,19 @@ def extract_embedded_files(file_path):
   if not os.path.exists(macro_path):
     print(f"Cannot find {macro_path}")
     sys.exit(1)
-  try:
-    subprocess.Popen(
-      ["python", "un_macro.py", macro_path, file_path], check=True
-    )
-  except subprocess.CalledProcessError:
-    print(f"Error extracting embedded files from {file_path}")
-    return
+
+  macro_runner = os.path.abspath(os.path.join(path, "run_macro.py"))
+  if not os.path.exists(macro_runner):
+    print(f"Cannot find {macro_runner}")
+    sys.exit(1)
+
+  wd = open_word()
+  run_macros(wd, [file_path], False, macro_path, False, file_dir, "_done")
+  close_word(wd)
   print("Done!")
 
 
-def add_embedded_file_content(out_file_path, media_dir):
+def add_embedded_file_content(out_file_path, file_dir):
   if not os.path.exists(out_file_path):
     print(f"Cannot find {out_file_path}")
     return
@@ -174,11 +194,11 @@ def add_embedded_file_content(out_file_path, media_dir):
   with open(out_file_path, "r") as file:
     md_content = file.read()
 
-  odt_files = [f for f in os.listdir(media_dir) if f.endswith(".odt")]
+  odt_files = [f for f in os.listdir(file_dir) if f.endswith(".odt")]
 
   for odt_file in odt_files:
     # get the text from the odt file
-    odt_content = odf_load(os.path.join(media_dir, odt_file))
+    odt_content = odf_load(os.path.join(file_dir, odt_file))
     odt_text = ""
     for para in odt_content.getElementsByType(odf_text.P):
       odt_text += teletype.extractText(para) + "\n"
@@ -189,7 +209,7 @@ def add_embedded_file_content(out_file_path, media_dir):
 
     # Get ht odtFile name without the extension
     odt_file_name = os.path.basename(odt_file).split(".")[0]
-    searchText = f"![]({media_dir}/media/image{odt_file_name}.emf)"
+    searchText = f"![]({file_dir}/media/image{odt_file_name}.emf)"
 
     replacement_text = "```" + language + "\n" + odt_text + "```\n"
     md_content = md_content.replace(searchText, replacement_text)
@@ -205,7 +225,7 @@ def add_embedded_file_content(out_file_path, media_dir):
 
 
 def remove_done_file(filename, input_dir):
-  print(f"Removing {filename}_done.docx...")
+  print(f"Removing {os.path.basename(filename)}_done.docx...")
   if os.path.exists(os.path.join(input_dir, filename + "_done.docx")):
     os.remove(os.path.join(input_dir, filename + "_done.docx"))
 

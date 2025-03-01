@@ -8,6 +8,7 @@ ruff = "*"
 pyandoc = "*"
 odfpy = "*"
 pywin32 = "*"
+pandoc = "*"
 
 [dev-packages]
 ruff = "*"

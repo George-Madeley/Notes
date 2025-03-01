@@ -1,0 +1,3 @@
+[submodule "imports/pandoc"]
+	path = imports/pandoc
+	url = https://github.com/jgm/pandoc

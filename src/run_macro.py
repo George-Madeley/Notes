@@ -1,36 +1,26 @@
-import win32com.client as win32
 import argparse
 import os
+import sys
+
+import win32com.client as win32_client
 
 
 def main():
   args = init_parser()
-
-  recurse = args.recurse or False
-  save_as_suffix = args.suffix or "_done"
-  macro_name = args.macro_name
-  doc_path = args.doc_path
-
   # default to current folder
-  if len(doc_path) < 1:
-    doc_path = ["."]
+  if len(args.doc_path) < 1:
+    args.doc_path = ["."]
 
-  wd = win32.gencache.EnsureDispatch("Word.Application")
-  wd.Visible = False
-
-  run_macros(wd, doc_path, macro_name, save_as_suffix, recurse)
-
-  # clean up
-  print("Closing Word")
-  wd.Quit()
-  wd = None
+  wd = open_word()
+  run_macros(wd, args.doc_path, args)
+  close_word(wd)
 
 
 def init_parser():
   parser = argparse.ArgumentParser()
   parser.add_argument(
-    "macro_name",
-    help="name of the macro to run in Word. Make sure the macro exists.",
+    "macro_path",
+    help="Path of the macro to run in Word",
   )
   parser.add_argument(
     "-r",
@@ -45,6 +35,19 @@ def init_parser():
     "-s",
     "--suffix",
     help="customize the suffix for processed files. (default: _done)",
+    default="_done",
+    nargs="?",
+  )
+  parser.add_argument(
+    "--save",
+    help="wether to save the file after running the macro. (default: false)",
+    action="store_true",
+  )
+  parser.add_argument(
+    "--out",
+    help="output folder for the processed files. (default: current folder)",
+    default=".",
+    nargs="?",
   )
   parser.add_argument(
     "doc_path",
@@ -65,8 +68,19 @@ def init_parser():
   return args
 
 
-def run_macros(wd, doc_path, macro_name, save_as_suffix, recurse):
-  for dp in doc_path:
+def open_word():
+  wd = win32_client.gencache.EnsureDispatch("Word.Application")
+  wd.Visible = False
+  return wd
+
+
+def close_word(wd):
+  wd.Quit()
+  wd = None
+
+
+def run_macros(wd, items, recurse, macro_path, save, out, suffix):
+  for dp in items:
     dp = os.path.abspath(dp)  # convert to absolute path
     # if path is a folder, grab ALL docx files from folder
     # otherwise, just run this file
@@ -83,10 +97,11 @@ def run_macros(wd, doc_path, macro_name, save_as_suffix, recurse):
         if recurse
         else [os.path.join(dp, f) for f in os.listdir(dp) if f.endswith("docx")]
       )
-      run_macros(wd, sub_items, macro_name, save_as_suffix, recurse)  # recurse
+      run_macros(wd, sub_items, False, macro_path, save, out, suffix)  # recurse
     else:
       # open doc
       doc = wd.Documents.Open(dp)
+      macro_name = load_macro(doc, macro_path, out)
       pth = doc.Path + wd.PathSeparator
       nm = doc.Name.split(".")[0]
       ext = "." + doc.Name.split(".")[1]
@@ -97,10 +112,55 @@ def run_macros(wd, doc_path, macro_name, save_as_suffix, recurse):
       wd.Application.Run(macro_name)
 
       # save as, close and clean up
-      print("saving and closing doc", nm)
-      doc.SaveAs(pth + nm + save_as_suffix + ext)
+      if save:
+        print("saving and closing doc", nm)
+        doc.SaveAs(pth + nm + suffix + ext)
       doc.Close()
       doc = None
+
+  # clean up
+  print("Closing Word")
+  wd.Quit()
+  wd = None
+
+
+def load_macro(doc, macro_path, out):
+  if not os.path.exists(macro_path):
+    print(f"Cannot find {macro_path}")
+    sys.exit(1)
+
+  macro_name = os.path.basename(macro_path).split(".")[0]
+
+  with open(macro_path, "r") as file:
+    macro_code = file.read()
+
+  # use regex to find ##media_dir## and replace with the args.out
+  macro_code = macro_code.replace("##out_dir##", os.path.join(out, "code"))
+  if not os.path.exists(os.path.join(out, "code")):
+    os.makedirs(os.path.join(out, "code"))
+
+  vba_project = doc.VBProject
+  # Check if the macro already exists and remove it
+  for component in vba_project.VBComponents:
+    if component.Name == "Module1":  # Assuming the macro is stored in Module1
+      code_module = component.CodeModule
+      found = code_module.Find(macro_name)
+      if found:
+        start_line, num_lines = (
+          code_module.ProcStartLine(macro_name, 0),
+          code_module.ProcCountLines(macro_name, 0),
+        )
+        code_module.DeleteLines(start_line, num_lines)
+      break
+  else:
+    # If the module does not exist, create it
+    component = vba_project.VBComponents.Add(1)
+    component.Name = "Module1"
+
+  # Add VBA macro to the module
+  component.CodeModule.AddFromString(macro_code)
+
+  return macro_name
 
 
 if __name__ == "__main__":

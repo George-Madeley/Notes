@@ -29,23 +29,38 @@ def main():
 def init_parser():
   parser = argparse.ArgumentParser()
   parser.add_argument(
-      'macro_name',
-      help='name of the macro to run in Word. Make sure the macro exists.')
+    "macro_name",
+    help="name of the macro to run in Word. Make sure the macro exists.",
+  )
   parser.add_argument(
-      '-r',
-      '--recurse',
-      action='store_true',
-      help='recursively search through subfolders when looking for docx files. (default: false)')
+    "-r",
+    "--recurse",
+    action="store_true",
+    help="""
+    recursively search through subfolders when looking for docx files. (default:
+    false)
+    """,
+  )
   parser.add_argument(
-      '-s',
-      '--suffix',
-      help='customize the suffix for processed files. (default: _done)')
+    "-s",
+    "--suffix",
+    help="customize the suffix for processed files. (default: _done)",
+  )
   parser.add_argument(
-      'doc_path',
-      nargs=argparse.REMAINDER,
-      help='path/s to .docx files or a folders that contains .docx files. (default: current folder)')
-  parser.epilog = "© 2021 - Paul McClintock - https://gist.github.com/plauk/1d26b3c6434a6b0fc44a9b213bf92d77"
-  parser.usage = "run_macro.py [-h] [-r] [-s SUFFIX] macro_name *doc_path (*add as many as you want)"
+    "doc_path",
+    nargs=argparse.REMAINDER,
+    help="""
+    path/s to .docx files or a folders that contains .docx files. (default:
+    current folder)
+    """,
+  )
+  parser.epilog = """
+  © 2021 - Paul McClintock - https://gist.github.com/plauk/1d26b3c6434a6b0fc44a9b213bf92d77
+  """
+  parser.usage = """
+  run_macro.py [-h] [-r] [-s SUFFIX] macro_name *doc_path (*add as many as you
+  want)
+  """
   args = parser.parse_args()
   return args
 
@@ -59,16 +74,15 @@ def run_macros(wd, doc_path, macro_name, save_as_suffix, recurse):
     if os.path.isdir(dp):
       # recursively (or not) call this function for all docx files in this
       # folder
-      sub_items = [
-          os.path.join(
-              dp,
-              f) for f in os.listdir(dp) if f.endswith("docx") or os.path.isdir(
-              os.path.join(
-                  dp,
-                  f))] if recurse else [
-          os.path.join(
-            dp,
-              f) for f in os.listdir(dp) if f.endswith("docx")]
+      sub_items = (
+        [
+          os.path.join(dp, f)
+          for f in os.listdir(dp)
+          if f.endswith("docx") or os.path.isdir(os.path.join(dp, f))
+        ]
+        if recurse
+        else [os.path.join(dp, f) for f in os.listdir(dp) if f.endswith("docx")]
+      )
       run_macros(wd, sub_items, macro_name, save_as_suffix, recurse)  # recurse
     else:
       # open doc

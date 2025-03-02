@@ -77,6 +77,11 @@ def main():
     help="Generate a contents.md file",
     action="store_true",
   )
+  parser.add_argument(
+    "--readme_contents",
+    help="Add the contents.md file to the README.md file",
+    action="store_true",
+  )
   args = parser.parse_args()
 
   if args.input_paths != input_paths:
@@ -255,22 +260,59 @@ def remove_done_file(filename, input_dir):
 def gen_contents(args):
   print("Generating contents.md...")
   path = chdir()
-  conents_path = os.path.abspath(
-    os.path.join(path, "..", "output", "README.md")
-  )
+  conents_path = os.path.abspath(os.path.join(args.out_directory, "README.md"))
+  notes_category = {}
+  for root, _, files in os.walk(args.out_directory):
+    for file in files:
+      if file.endswith(".md") and not file == "README.md":
+        category = os.path.basename(root)[:2]
+        if category not in notes_category:
+          notes_category[category] = [os.path.join(root, file)]
+        else:
+          notes_category[category].append(os.path.join(root, file))
+
   with open(conents_path, "w") as contents_file:
     contents_file.write("# Table of Contents\n\n")
-    for root, _, files in os.walk(args.out_directory):
-      for file in files:
-        if file.endswith(".md") and not file == "README.md":
-          # file path is the relative path to the file. Use linux style paths
-          file_path = os.path.relpath(
-            os.path.join(root, file), args.out_directory
-          ).replace("\\", "/")
-          # escape any whitespace in the file path
-          file_path = file_path.replace(" ", "%20")
-          file_name = os.path.basename(file).split(".")[0]
-          contents_file.write(f"1. [{file_name}]({file_path})\n")
+    for category in sorted(notes_category.keys()):
+      contents_file.write(f"\n## {category}\n\n")
+      for note in sorted(notes_category[category]):
+        # file path is the relative path to the file. Use linux style paths
+        file_path = os.path.relpath(note, args.out_directory).replace("\\", "/")
+        # escape any whitespace in the file path
+        file_path = file_path.replace(" ", "%20")
+        file_name = os.path.basename(note).split(".")[0]
+        contents_file.write(f"1. [{file_name}]({file_path})\n")
+
+  if args.readme_contents:
+    readme_path = os.path.abspath(os.path.join(path, "..", "README.md"))
+    with open(readme_path, "r") as readme_file:
+      readme_content = readme_file.read()
+      # find and delete the text between the ## Table of Contents and the ## Disclaimer
+      table_of_contents = re.search(
+        r"## Table of Contents(.*\n)+## Disclaimer", readme_content
+      )
+      if table_of_contents:
+        replacement_text = ""
+        for category in sorted(notes_category.keys()):
+          replacement_text += f"\n### {category}\n\n"
+          for note in sorted(notes_category[category]):
+            # file path is the relative path to the file. Use linux style paths
+            readme_dir = os.path.dirname(readme_path)
+            file_path = os.path.relpath(note, readme_dir).replace("\\", "/")
+            # escape any whitespace in the file path
+            file_path = file_path.replace(" ", "%20")
+            file_name = os.path.basename(note).split(".")[0]
+            replacement_text += f"1. [{file_name}]({file_path})\n"
+        print(replacement_text)
+        readme_content = re.sub(
+          r"## Table of Contents(.*\n)+## Disclaimer",
+          f"## Table of Contents\n{replacement_text}\n## Disclaimer",
+          readme_content,
+        )
+        with open(readme_path, "w") as readme_file:
+          readme_file.write(readme_content)
+      else:
+        print("Cannot find ## Table of Contents in README.md")
   print("Done!")
 
 

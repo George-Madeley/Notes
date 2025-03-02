@@ -3,6 +3,7 @@ import subprocess
 import argparse
 import sys
 import tempfile
+import re
 
 from odf import text as odf_text, teletype
 from odf.opendocument import load as odf_load
@@ -71,6 +72,11 @@ def main():
     type=str,
     default=pandoc,
   )
+  parser.add_argument(
+    "--gen_contents",
+    help="Generate a contents.md file",
+    action="store_true",
+  )
   args = parser.parse_args()
 
   if args.input_paths != input_paths:
@@ -88,10 +94,10 @@ def main():
   if not os.path.exists(args.out_directory):
     os.makedirs(args.out_directory, exist_ok=True)
 
-  convertFiles(args)
+  convert_files(args)
 
 
-def convertFiles(args):
+def convert_files(args):
   docx_files = get_docx_files(args)
 
   for docx_file in docx_files:
@@ -102,10 +108,12 @@ def convertFiles(args):
 
     out_file_path = os.path.join(file_dir, filename + ".md")
 
-    docx_to_md(args, docx_file, out_file_path, file_dir)
-    extract_embedded_files(docx_file, file_dir)
-    add_embedded_file_content(out_file_path, file_dir)
-    remove_done_file(filename, os.path.dirname(docx_file))
+    # docx_to_md(args, docx_file, out_file_path, file_dir)
+    # extract_embedded_files(docx_file, file_dir)
+    # add_embedded_file_content(out_file_path, file_dir)
+    # remove_done_file(filename, os.path.dirname(docx_file))
+  if args.gen_contents:
+    gen_contents(args)
 
 
 def get_docx_files(args):
@@ -191,36 +199,50 @@ def add_embedded_file_content(out_file_path, file_dir):
     print(f"Cannot find {out_file_path}")
     return
 
-  with open(out_file_path, "r") as file:
+  with open(out_file_path, "r", encoding="utf-8") as file:
     md_content = file.read()
 
-  odt_files = [f for f in os.listdir(file_dir) if f.endswith(".odt")]
+  code_dir = os.path.join(file_dir, "code")
+  try:
+    if os.path.exists(code_dir):
+      odt_files = [f for f in os.listdir(code_dir) if f.endswith(".odt")]
 
-  for odt_file in odt_files:
-    # get the text from the odt file
-    odt_content = odf_load(os.path.join(file_dir, odt_file))
-    odt_text = ""
-    for para in odt_content.getElementsByType(odf_text.P):
-      odt_text += teletype.extractText(para) + "\n"
+      for odt_file in odt_files:
+        # get the text from the odt file
+        odt_content = odf_load(os.path.join(code_dir, odt_file))
+        odt_text = ""
+        for para in odt_content.getElementsByType(odf_text.P):
+          odt_text += teletype.extractText(para) + "\n"
 
-    # Replace \xa0 with \t
-    odt_text = Markdown_Formatter.format_tabs(odt_text)
-    language = "text"
+        # Replace \xa0 with \t
+        odt_text = Markdown_Formatter.format_tabs(odt_text)
+        language = "text"
 
-    # Get ht odtFile name without the extension
-    odt_file_name = os.path.basename(odt_file).split(".")[0]
-    searchText = f"![]({file_dir}/media/image{odt_file_name}.emf)"
+        # Get the odt number and check if it is in the matches. If it is, replace
+        # the match with the odt text
+        odt_file_name = os.path.basename(odt_file).split(".")[0]
+        odt_num = odt_file_name.split("-")[1]
 
-    replacement_text = "```" + language + "\n" + odt_text + "```\n"
-    md_content = md_content.replace(searchText, replacement_text)
+        search_text = r"!\[.*\]\(.*image" + odt_num + r"\.emf\)"
+        replacement_text = "```" + language + "\n" + odt_text + "```\n"
+        md_content = re.sub(search_text, replacement_text, md_content)
+  except Exception:
+    print("===============================================")
+    print(f"Error extracting code from {out_file_path}")
+    print("===============================================")
+    pass
 
   md_content = Markdown_Formatter.format_contents(md_content)
   md_content = Markdown_Formatter.format_new_lines(md_content)
   md_content = Markdown_Formatter.replace_tabs_with_spaces(md_content)
   md_content = Markdown_Formatter.format_lists(md_content)
   md_content = Markdown_Formatter.remove_unnumbered(md_content)
+  md_content = Markdown_Formatter.format_images(md_content)
+  md_content = Markdown_Formatter.format_cover_page(md_content)
+  md_content = Markdown_Formatter.remove_format_table(md_content)
+  md_content = Markdown_Formatter.format_headings(md_content)
 
-  with open(out_file_path, "w") as file:
+  with open(out_file_path, "w", encoding="utf-8") as file:
     file.write(md_content)
 
 
@@ -228,6 +250,28 @@ def remove_done_file(filename, input_dir):
   print(f"Removing {os.path.basename(filename)}_done.docx...")
   if os.path.exists(os.path.join(input_dir, filename + "_done.docx")):
     os.remove(os.path.join(input_dir, filename + "_done.docx"))
+
+
+def gen_contents(args):
+  print("Generating contents.md...")
+  path = chdir()
+  conents_path = os.path.abspath(
+    os.path.join(path, "..", "output", "README.md")
+  )
+  with open(conents_path, "w") as contents_file:
+    contents_file.write("# Table of Contents\n\n")
+    for root, _, files in os.walk(args.out_directory):
+      for file in files:
+        if file.endswith(".md") and not file == "README.md":
+          # file path is the relative path to the file. Use linux style paths
+          file_path = os.path.relpath(
+            os.path.join(root, file), args.out_directory
+          ).replace("\\", "/")
+          # escape any whitespace in the file path
+          file_path = file_path.replace(" ", "%20")
+          file_name = os.path.basename(file).split(".")[0]
+          contents_file.write(f"1. [{file_name}]({file_path})\n")
+  print("Done!")
 
 
 # ---------------------------------------------------------------------------- #

@@ -9,8 +9,15 @@
     "@commitlint/config-conventional": "^19.8.0",
     "@commitlint/format": "^19.8.0",
     "@commitlint/types": "^19.8.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.2",
+    "@semantic-release/release-notes-generator": "^14.0.3",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.2",
+    "semantic-release": "^24.2.3",
     "typescript": "^5.8.3"
   },
   "directories": {
@@ -31,7 +38,8 @@
   "scripts": {
     "lint": "pipenv run ruff check",
     "lint:fix": "pipenv run ruff check --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "release": "semantic-release"
   },
   "version": "1.0.0"
 }

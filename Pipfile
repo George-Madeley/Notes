@@ -7,8 +7,8 @@ name = "pypi"
 ruff = "*"
 pyandoc = "*"
 odfpy = "*"
-pywin32 = "*"
 pandoc = "*"
+pywin32 = { version = "*", markers = "sys_platform == 'win32'" }
 
 [dev-packages]
 ruff = "*"

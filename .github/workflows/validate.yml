@@ -1,0 +1,33 @@
+name: Validate
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - release
+
+jobs:
+  format:
+    name: Format Check
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install pipenv
+          pipenv install --dev
+
+      # Step 4: Run ruff check
+      - name: Run ruff check
+        run: pipenv run ruff check .

@@ -17,7 +17,7 @@
     "doc": "docs"
   },
   "homepage": "https://github.com/George-Madeley/Notes#readme",
-  "license": "ISC",
+  "license": "SEE LICENSE IN LICENSE",
   "lint-staged": {
     "*.py": [
       "pipenv run ruff check"

@@ -116,14 +116,14 @@ class Markdown_Formatter:
 
   @staticmethod
   def format_cover_page(text):
-    pattern = r"\+.*\n.*>\s*(.*\w).*\|\n.*\n.*\n.*\n.*>\s*(.*\w).*\|\n.*\n.*>\s*(.*\w).*\|\n.*\n.*>\s*(.*\d).*\|\n.*\+"
+    pattern = r"\+.*\n.*>\s*(.*\w).*\|\n.*\n.*\n.*\n.*>\s*(.*\w).*\|\n.*\n.*>\s*(.*\w).*\|\n.*\n.*>\s*(.*\d).*\|\n.*\+"  # noqa: E501
     text = re.sub(pattern, r"# \1\n\n@ \2\n@ \3\n@ \4\n", text)
     text = text.replace("\n\n\n: Cover page info", "")
     return text
 
   @staticmethod
   def remove_format_table(text):
-    pattern = r"\nThese notes use a range of different formatting for different purposes.\nThe following is each format and their purpose:\n\n\+(?:.*\n){15}.*\+\n"
+    pattern = r"\nThese notes use a range of different formatting for different purposes.\nThe following is each format and their purpose:\n\n\+(?:.*\n){15}.*\+\n"  # noqa: E501
     text = re.sub(pattern, "", text)
     return text
 

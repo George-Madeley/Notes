@@ -1,0 +1,32 @@
+{
+  "name": "notes",
+  "version": "1.0.0",
+  "description": "A series of notes written by George Madeley",
+  "homepage": "https://github.com/George-Madeley/Notes#readme",
+  "bugs": {
+    "url": "https://github.com/George-Madeley/Notes/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/George-Madeley/Notes.git"
+  },
+  "license": "ISC",
+  "author": "George Madeley",
+  "directories": {
+    "doc": "docs"
+  },
+  "lint-staged": {
+    "*.{py}": [
+      "pipenv run ruff check"
+    ]
+  },
+  "scripts": {
+    "prepare": "husky",
+    "lint": "pipenv run ruff check",
+    "lint:fix": "pipenv run ruff check --fix"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2"
+  }
+}

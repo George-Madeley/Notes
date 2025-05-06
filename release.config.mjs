@@ -1,6 +1,8 @@
 export default {
   branches: ["release"],
   plugins: [
+    "@semantic-release/github",
+    "@semantic-release/changelog",
     [
       "@semantic-release/commit-analyzer",
       {
@@ -47,8 +49,6 @@ export default {
         npmPublish: false,
       },
     ],
-    "@semantic-release/github",
-    "@semantic-release/changelog",
     [
       "@semantic-release/git",
       {

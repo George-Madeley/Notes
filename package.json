@@ -1,32 +1,37 @@
 {
-  "name": "notes",
-  "version": "1.0.0",
-  "description": "A series of notes written by George Madeley",
-  "homepage": "https://github.com/George-Madeley/Notes#readme",
+  "author": "George Madeley",
   "bugs": {
     "url": "https://github.com/George-Madeley/Notes/issues"
   },
+  "description": "A series of notes written by George Madeley",
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@commitlint/format": "^19.8.0",
+    "@commitlint/types": "^19.8.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "typescript": "^5.8.3"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "homepage": "https://github.com/George-Madeley/Notes#readme",
+  "license": "ISC",
+  "lint-staged": {
+    "*.py": [
+      "pipenv run ruff check"
+    ]
+  },
+  "name": "notes",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/George-Madeley/Notes.git"
   },
-  "license": "ISC",
-  "author": "George Madeley",
-  "directories": {
-    "doc": "docs"
-  },
-  "lint-staged": {
-    "*.{py}": [
-      "pipenv run ruff check"
-    ]
-  },
   "scripts": {
-    "prepare": "husky",
     "lint": "pipenv run ruff check",
-    "lint:fix": "pipenv run ruff check --fix"
+    "lint:fix": "pipenv run ruff check --fix",
+    "prepare": "husky"
   },
-  "devDependencies": {
-    "husky": "^9.1.7",
-    "lint-staged": "^15.5.2"
-  }
+  "version": "1.0.0"
 }

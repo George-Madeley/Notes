@@ -113,10 +113,10 @@ def convert_files(args):
 
     out_file_path = os.path.join(file_dir, filename + ".md")
 
-    # docx_to_md(args, docx_file, out_file_path, file_dir)
-    # extract_embedded_files(docx_file, file_dir)
-    # add_embedded_file_content(out_file_path, file_dir)
-    # remove_done_file(filename, os.path.dirname(docx_file))
+    docx_to_md(args, docx_file, out_file_path, file_dir)
+    extract_embedded_files(docx_file, file_dir)
+    add_embedded_file_content(out_file_path, file_dir)
+    remove_done_file(filename, os.path.dirname(docx_file))
   if args.gen_contents:
     gen_contents(args)
 
@@ -223,8 +223,8 @@ def add_embedded_file_content(out_file_path, file_dir):
         odt_text = Markdown_Formatter.format_tabs(odt_text)
         language = "text"
 
-        # Get the odt number and check if it is in the matches. If it is, replace
-        # the match with the odt text
+        # Get the odt number and check if it is in the matches. If it is,
+        # replace the match with the odt text
         odt_file_name = os.path.basename(odt_file).split(".")[0]
         odt_num = odt_file_name.split("-")[1]
 
@@ -260,7 +260,7 @@ def remove_done_file(filename, input_dir):
 def gen_contents(args):
   print("Generating contents.md...")
   path = chdir()
-  conents_path = os.path.abspath(os.path.join(args.out_directory, "README.md"))
+  contents_path = os.path.abspath(os.path.join(args.out_directory, "README.md"))
   notes_category = {}
   for root, _, files in os.walk(args.out_directory):
     for file in files:
@@ -271,7 +271,7 @@ def gen_contents(args):
         else:
           notes_category[category].append(os.path.join(root, file))
 
-  with open(conents_path, "w") as contents_file:
+  with open(contents_path, "w") as contents_file:
     contents_file.write("# Table of Contents\n\n")
     for category in sorted(notes_category.keys()):
       contents_file.write(f"\n## {category}\n\n")
@@ -287,7 +287,8 @@ def gen_contents(args):
     readme_path = os.path.abspath(os.path.join(path, "..", "README.md"))
     with open(readme_path, "r") as readme_file:
       readme_content = readme_file.read()
-      # find and delete the text between the ## Table of Contents and the ## Disclaimer
+      # find and delete the text between the ## Table of Contents and the
+      # ## Disclaimer
       table_of_contents = re.search(
         r"## Table of Contents(.*\n)+## Disclaimer", readme_content
       )

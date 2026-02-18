@@ -4,12 +4,9 @@
 @ Personal Studies
 @ 12/3/24
 
-### Introduction
+## Introduction
 
-This is a collection of notes that I, George Madeley, took when taking
-the Codecademy Colour Design and Navigational Design courses. I do not
-take ownership of the material covered and these notes should only be
-used for educational purposes.
+This is a collection of notes that I, George Madeley, took when taking the Codecademy Color Design and Navigational Design courses. I do not take ownership of the material covered and these notes should only be used for educational purposes.
 
 ### Contents
 
@@ -17,11 +14,11 @@ used for educational purposes.
 
 [Contents](#contents)
 
-[Section 1: Colour Design](#colour-design)
+[Section 1: Color Design](#color-design)
 
-[1 - Learn Colour Theory](#learn-colour-theory)
+[1 - Learn Color Theory](#learn-color-theory)
 
-[2 - Learn Colour for UI](#learn-colour-for-ui)
+[2 - Learn Color for UI](#learn-color-for-ui)
 
 [Section 2: Navigation Design](#navigation-design)
 
@@ -29,280 +26,194 @@ used for educational purposes.
 
 [2 - Learn Secondary Navigation](#learn-secondary-navigation)
 
-## Colour Design
+## Color Design
 
-### Learn Colour Theory
+### Learn Color Theory
 
-#### Introduction to Colour Theory
+#### Introduction to Color Theory
 
-Before selecting and applying colour to your projects, it's essential to
-gain an understanding of:
+Before selecting and applying color to your projects, it's essential to gain an understanding of:
 
-- Which colour pairs work well with each other.
-
-- What colour schemes are available to produce effective designs.
-
-- Which emotions each colour evokes and communicates.
-
+- Which color pairs work well with each other.
+- What color schemes are available to produce effective designs.
+- Which emotions each color evokes and communicates.
 - How contrast plays a vital role.
+- What color combinations you should avoid.
 
-- What colour combinations you should avoid.
+#### The Color Wheel
 
-#### The Colour Wheel
+As you being to select colors to use in your design projects, the color wheel will be vital in determining which color pairs work well together.
 
-As you being to select colours to use in your design projects, the
-colour wheel will be vital in determining which colour pairs work well
-together.
+#### The Color Wheel and HAS
 
-#### The Colour Wheel and HAS
+When thinking like a designer, HSLA is the preferred syntax for setting colors.
 
-When thinking like a designer, HSLA is the preferred syntax for setting
-colours.
-
-- **Hue --** The 'pure' colour is set with the Hue. This is expressed as
-  the angle in degrees around the colour wheel.
-
-- **Saturation --** refers to the intensity or purity of that hue.
+- **Hue -** The 'pure' color is set with the Hue. This is expressed as
+  the angle in degrees around the color wheel.
+- **Saturation -** refers to the intensity or purity of that hue.
   Saturation at 0% is grey scale.
-
-- **Lightness --** refers to the lightness of the colour. 0% is black
+- **Lightness -** refers to the lightness of the color. 0% is black
   and 100% is white.
-
-- **Alpha --** refers to the opacity. 0% is transparent whilst 100% is
+- **Alpha -** refers to the opacity. 0% is transparent whilst 100% is
   opaque.
 
-#### Warm Colours
+#### Warm Colors
 
-All colours have a warmth value assigned to them, which can be
-classified as warm or cool. Warm colours consist of red to yellow colour
-range. Warm colours can also promote a feeling of aggression and are
-considered bold.
+All colors have a warmth value assigned to them, which can be classified as warm or cool. Warm colors consist of red to yellow color range. Warm colors can also promote a feeling of aggression and are considered bold.
 
-#### Cool Colours
+#### Cool Colors
 
-These colours range between blue, purple, and green. Most grey colours
-fall into the cool category as well. Cool colours can be associated with
-winter climates or water.
+These colors range between blue, purple, and green. Most grey colors fall into the cool category as well. Cool colors can be associated with winter climates or water.
 
 #### Tints and Shades
 
-You can also increase and decrease the lightness of a colour, resulting
-in tints and shades of a hue, respectfully.
+You can also increase and decrease the lightness of a color, resulting in tints and shades of a hue, respectfully.
 
-Tints can occur when white is applied to the colour, adding, or
-increasing the lightness of a hue. Shades are created when black is
-added to a colour which decrease the lightness of a hue.
+Tints can occur when white is applied to the color, adding, or increasing the lightness of a hue. Shades are created when black is added to a color which decrease the lightness of a hue.
 
-#### Colour Contrast
+#### Color Contrast
 
-Colours opposite of each other on the colour wheel tend to have a higher
-contrast. Colours next to each other have a lower contrast to one
-another. It's essential to try and increase the contrast of your designs
-in order to promote each of use and legibility.
+Colors opposite of each other on the color wheel tend to have a higher contrast. Colors next to each other have a lower contrast to one another. It's essential to try and increase the contrast of your designs in order to promote each of use and legibility.
 
-#### Colour Schemes
+#### Color Schemes
 
-Colours schemes or colour pallets are the result of pairing two or more
-colours together. When deciding which colours to use in your design,
-there are four different colour schemes to consider:
+Colors schemes or color pallets are the result of pairing two or more colors together. When deciding which colors to use in your design, there are four different color schemes to consider:
 
 - Monochromatic,
-
 - Complementary,
-
 - Analogous,
-
 - Triadic.
 
 #### Monochromatic Designs
 
-This utilizes a single colour with varying shades and tints to create a
-monochromatic palette.
+This utilizes a single color with varying shades and tints to create a monochromatic palette.
 
 #### Complementary Designs
 
-This utilizes colours opposite from each other on the colour wheel.
-Complementary colour schemes are popular on the web as they have high
-contrast in the colour pairing.
+This utilizes colors opposite from each other on the color wheel. Complementary color schemes are popular on the web as they have high contrast in the color pairing.
 
-#### Analogous Colour Scheme
+#### Analogous Color Scheme
 
-This applies three or more colours that are adjacent to each other on
-the colour wheel. Typically, there is one dominant colour (or Hue),
-combined with a second to support, and a third to accent the colour
-palette.
+This applies three or more colors that are adjacent to each other on the color wheel. Typically, there is one dominant color (or Hue), combined with a second to support, and a third to accent the color palette.
 
 This provides a low-contrast experience.
 
-#### Colour Psychology
+#### Color Psychology
 
-Each colour has a specific meaning, which can evoke emotions from a
-user. For instance, here's a list of words often associated with
-colours:
+Each color has a specific meaning, which can evoke emotions from a user. For instance, here's a list of words often associated with colors:
 
-- **Red --** passionate, energetic, angry,
+- **Red -** passionate, energetic, angry,
+- **Orange -** Optimistic, playful, fun,
+- **Yellow -** Welcoming, intellectual, impatient,
+- **Green -** Prosperous, balanced, growing,
+- **Blue -** Peaceful, loyal, cold,
+- **Purple -** Imaginative, royal, spiritual,
+- **Gray -** Unemotional, compromising,
+- **White -** Innocent, pure,
+- **Black -** Luxurious, powerful.
 
-- **Orange --** Optimistic, playful, fun,
+#### Best Practices
 
-- **Yellow --** Welcoming, intellectual, impatient,
+Use neon colors sparingly, they are often hard on the users' eyes.
 
-- **Green --** Prosperous, balanced, growing,
+Avoid vibrating colors. Vibrating colors result from pairing two colors with high saturation together that may be complementary to one another. It creates a glowing or moving effect, which also can be hard on one's eyes.
 
-- **Blue --** Peaceful, loyal, cold,
+Use backdrops to separate vibrant colors.
 
-- **Purple --** Imaginative, royal, spiritual,
+Avoid colors combinations with insufficient contrast.
 
-- **Gray --** Unemotional, compromising,
+Adobe Color is a great resource to generate color schemes.
 
-- **White --** Innocent, pure,
-
-- **Black --** Luxurious, powerful.
-
-#### Best Practises
-
-Use neon colours sparingly, they are often hard on the users' eyes.
-
-Avoid vibrating colours. Vibrating colours result from pairing two
-colours with high saturation together that may be complementary to one
-another. It creates a glowing or moving effect, which also can be hard
-on one's eyes.
-
-Use backdrops to separate vibrant colours.
-
-Avoid colours combinations with insufficient contrast.
-
-Adobe Colour is a great resource to generate colour schemes.
-
-### Learn Colour for UI
+### Learn Color for UI
 
 #### Contrast Constraints
 
-When applying contrast to a page, it is important to limit the overall
-amount of contrast. This helps you as the designer to highlight only the
-most important parts of the page.
+When applying contrast to a page, it is important to limit the overall amount of contrast. This helps you as the designer to highlight only the most important parts of the page.
 
 Having a background with a low lightness or saturation is a good base.
 
 A hero is a section placed prominently on a web page like a banner.
 
-#### Band Colour
+#### Band Color
 
-There is a site called Brand Colours dedicated to showing those for
-various companies.
+There is a site called Brand Colors dedicated to showing those for various companies.
 
-When working on a design, it's essential to select and apply a brand
-colour. This is a hue that should dominate your colour palette. This
-brand colour will account for 60% of the colour used on your site.
+When working on a design, it's essential to select and apply a brand color. This is a hue that should dominate your color palette. This brand color will account for 60% of the color used on your site.
 
-#### Accent Colours
+#### Accent Colors
 
-Accent colours provide small pops of colour within your designs and can
-be used to draw the users attention.
+Accent colors provide small pops of color within your designs and can be used to draw the users attention.
 
 #### Buttons
 
-Accent colours can be used effectively with buttons. In addition, these
-supplementary colours can be used in the button states. These states
-are:
+Accent colors can be used effectively with buttons. In addition, these supplementary colors can be used in the button states. These states are:
 
 - Hover state,
-
 - Disabled state,
-
 - Selected/clicked state.
-
 - Stationary
+- and others...
 
-- \+ others.
-
-The hover state typically features a shade or tint of the accent colour
-used for the buttons. The disabled state is usually greyed out to
-signify inactivity.
+The hover state typically features a shade or tint of the accent color used for the buttons. The disabled state is usually greyed out to signify inactivity.
 
 #### Forms
 
 Like buttons form inputs have certain states:
 
 - Default state,
-
 - Selected/Active State,
-
 - Disabled State.
 
-The selected/active state is typically achieved by using a border colour
-or a box shadow effect. The disabled state should render much like a
-disabled button, greyed out.
+The selected/active state is typically achieved by using a border color or a box shadow effect. The disabled state should render much like a disabled button, greyed out.
 
-Inputs also have other colours that indicate success and failure; these
-are called semantic colours.
+Inputs also have other colors that indicate success and failure; these are called semantic colors.
 
-#### Semantic Colours
+#### Semantic Colors
 
-Red is used to emphasize if the user has entered information
-incorrectly. Red is also to provide more emphasis on delete buttons.
+Red is used to emphasize if the user has entered information incorrectly. Red is also to provide more emphasis on delete buttons.
 
-On the other hand, green is used to emphasis that the user has entered
-information correctly. Green is also used for submit or next buttons.
+On the other hand, green is used to emphasis that the user has entered information correctly. Green is also used for submit or next buttons.
 
-Sometimes an error may occur that is not the fault of the user. In this
-case, a warning message is used. A warning message has a colour of
-yellow typically.
+Sometimes an error may occur that is not the fault of the user. In this case, a warning message is used. A warning message has a color of yellow typically.
 
-#### Default Colours
+#### Default Colors
 
-High contrast is great but too high can be an issue. Try not to use
-black on white or vice versa, instead, use a dark grey to reduce the
-contrast to an acceptable level.
+High contrast is great but too high can be an issue. Try not to use black on white or vice versa, instead, use a dark grey to reduce the contrast to an acceptable level.
 
-#### Neutral Colours
+#### Neutral Colors
 
-Neutral colours, or hues with low lightness and/or saturation, make good
-base colours.
+Neutral colors, or hues with low lightness and/or saturation, make good base colors.
 
 #### Whitespace
 
-Whitespace, or negative space, refers to the emptiness between elements.
-Google uses white space to direct the users attention to the important
-features. Too much whitespace can negatively impact the flow of your
-site.
+Whitespace, or negative space, refers to the emptiness between elements. Google uses white space to direct the users attention to the important features. Too much whitespace can negatively impact the flow of your site.
 
 #### Accessibility
 
-Many users can experience different types of colour blindness:
+Many users can experience different types of color blindness:
 
 - **Red-green --** difficulty differentiating reg and green,
-
 - **Blue-yellow --** difficulty differentiating blue and yellow,
+- **Monochromatic --** can't see color.
 
-- **Monochromatic --** can't see colour.
+Because of this, try pairing another indicator along with color to convey information.
 
-Because of this, try pairing another indicator along with colour to
-convey information.
+An example of this could be a green check or red cross next to elements where the user entered something correctly vs incorrectly.
 
-An example of this could be a green check or red cross next to elements
-where the user entered something correctly vs incorrectly.
+'Color safe' is a website that creates accessible color palettes for your site based on Web Content Accessibility Guidelines (WCAG)
 
-'Colour safe' is a website that creates accessible colour palettes for
-your site based on Web Content Accessibility Guidelines (WCAG)
-
-'WebAIM Colour Contrast Checker' is used to check if your selected
-colours work with web usability.7
+'WebAIM Color Contrast Checker' is used to check if your selected colors work with web usability.
 
 #### Iterations
 
-If usability and aesthetics conflict, it is always best to err on the
-side of usability.
+If usability and aesthetics conflict, it is always best to err on the side of usability.
 
 Always iterate on your design:
 
 - **Define --** Product specification based on user research,
-
 - **Develop --** Build product to meet specification,
-
 - **Test --** Evaluate product based on feedback,
-
 - **Research --** Users and their needs
-
 - **Repeat!**
 
 ## Navigation Design
@@ -311,42 +222,31 @@ Always iterate on your design:
 
 #### Introduction to Links and Buttons
 
-To simplify an admittedly complex concept, signifiers are indicators
-that offer clues about how to interact with new objects or situations.
+To simplify an admittedly complex concept, signifiers are indicators that offer clues about how to interact with new objects or situations.
 
 #### Browser Link Styles
 
-By default, browsers include a 'user agent stylesheet', a set of default
-styles included with the browser ("user agent") for use on all web
-pages.
+By default, browsers include a 'user agent stylesheet', a set of default styles included with the browser ("user agent") for use on all web pages.
 
-Traditionally, links are differentiated from regular text using blue
-text and underlines to draw user's attention to their click ability.
-These are also clicked and previously visited states as well.
+Traditionally, links are differentiated from regular text using blue text and underlines to draw user's attention to their click ability. These are also clicked and previously visited states as well.
 
 #### Link Styling
 
-It is important to differentiate links from the surrounding text. Anchor
-text, the text itself of the link, should be descriptive of the linked
-resource.
+It is important to differentiate links from the surrounding text. Anchor text, the text itself of the link, should be descriptive of the linked resource.
 
 #### Tooltips and Titles
 
-Additional context can be provided as text using the HTML title
-attribute. Although the title attribute can be provided to any HTML
-element.
+Additional context can be provided as text using the HTML title attribute. Although the title attribute can be provided to any HTML element.
 
-```text
+```html
 <a href="..." title="something descriptive">Text</a>
 ```
 
 #### Hover States and Cursors
 
-The CSS pseudo-class :hover can be used to style elements on mouse
-hover. By using this pseudo-class, we can change an elements colour or
-change the cursor to a pointer.
+The CSS pseudo-class `:hover` can be used to style elements on mouse hover. By using this pseudo-class, we can change an elements color or change the cursor to a pointer.
 
-```text
+```css
 a:hover {
   cursor: pointer;
   color: blue;
@@ -359,31 +259,22 @@ Hover states are not accessible in mobile browsers.
 
 Links have four main states:
 
-- Normal (not clicked) :link
+- Normal (not clicked) `:link`
+- Hover `:hover`
+- Active (clicked) `:active`
+- Visited `:visited`
 
-- Hover :hover
-
-- Active (clicked) :active
-
-- Visited :visited
-
-Ensure that the styling is in the order :link, :visited, :hover, and
-:active. This ordering will ensure that the rules cascade properly.
+Ensure that the styling is in the order `:link`, `:visited`, `:hover`, and `:active`. This ordering will ensure that the rules cascade properly.
 
 #### Skeuomorphism and Flat Design
 
-The concept of UI elements that replicates or imitates real-life
-counterparts is known as skeuomorphism. Flat design is an alternative
-approach to skeuomorphism which embraces the fact that computer
-interfaces do no necessarily need to model real-life interfaces.
+The concept of UI elements that replicates or imitates real-life counterparts is known as skeuomorphism. Flat design is an alternative approach to skeuomorphism which embraces the fact that computer interfaces do no necessarily need to model real-life interfaces.
 
 #### Buttons
 
 ##### Skeuomorphic Styling
 
-Skeuomorphic button design aims to imitate the appearance and
-interactivity of a real-life button, often including a raised appearance
-while the button us unpressed and a pressed appearance when clicked.
+Skeuomorphic button design aims to imitate the appearance and interactivity of a real-life button, often including a raised appearance while the button us unpressed and a pressed appearance when clicked.
 
 ##### Flat Design
 
@@ -397,46 +288,51 @@ Hover states should make use of cursor: point declaration.
 
 #### Introduction to Secondary Navigation
 
-Primary navigation systems typically contain the most important links
-and buttons that need to be displayed on every page of the site.
+Primary navigation systems typically contain the most important links and buttons that need to be displayed on every page of the site.
 
-Secondary navigation, or breadcrumb navigation, usually consists of a
-clickable list of pages or attributes that led to the current page. It
-can help users understand the extent of the site and where they are
-currently.
+Secondary navigation, or breadcrumb navigation, usually consists of a clickable list of pages or attributes that led to the current page. It can help users understand the extent of the site and where they are currently.
 
 #### Simple Example of Breadcrumbs
 
-Users expect to find them in the header left-aligned, and below any
-primary navigation. They are typically separated by a "\>" or a "/"
-symbol. You will start with a plain looking list and apply CSS styles to
-that list.
+Users expect to find them in the header left-aligned, and below any primary navigation. They are typically separated by a `>` or a `/` symbol. You will start with a plain looking list and apply CSS styles to that list.
 
-display: inline will remove list bullet points if you apply the rule to
-the \<ol\> or \<ul\> element not the list objects such as \<li\>.
+`display: inline` will remove list bullet points if you apply the rule to the `<ol>` or `<ul>` element not the list objects such as `<li>`.
 
-![](C:\Users\George\Documents\Personal\Coding\Python\Notes Converter\output\GM01604 - Website Design Theory/media/image3.emf)
+```CSS
+.breadcrumbs li+li::before {
+  padding: 10px;
+  content: ">";
+}
+```
 
-The li+li selects he second list element of a li li pair. ::before
-positions any content to just before the selected element.
+The `li+li` selects he second list element of a li li pair. `::before` positions any content to just before the selected element.
 
 #### Where do Breadcrumbs Lead?
 
 Ensure your breadcrumbs are consistent on all pages. i.e.:
 
+`Shopping > Fashion > Shoes > Flats > Brown`
+
+`Shopping > Fashion > Shows > Flats`
+
+`Shopping > Fashion > Shoes`
+
 Not:
+
+`Shoes > Flats > Fashion`
 
 #### Breadcrumbs Styles
 
-You can style your breadcrumbs to make them a more prominent interactive
-part of your page. Below, we are using the ::before and ::after
-pseudo-elements to add filled rectangles before and after each list
-item.
+You can style your breadcrumbs to make them a more prominent interactive part of your page. Below, we are using the `::before` and `::after` pseudo-elements to add filled rectangles before and after each list item.
 
-```text
-.breadcrumbs li+li::before {
-  padding: 10px;
-  content: ">";
+```CSS
+.breadcrumbs li a::before,
+.breadcrumbs li a::after {
+  content: '';
+  position: absolute;
+  border-color: darkcyan;
+  border-style: solid;
+  border-width: 15px 5px;;
 }
 ```
 
@@ -447,18 +343,13 @@ Refer to breadcrumb styles in Codecademy for some amazing styling.
 There are three major types of breadcrumbs:
 
 - Location,
-
 - Attribute,
-
 - Path.
 
 ![A close-up of a paper Description automatically generated](media/image5.png)
 
-A better example would be searching for hotels in each country. The
-location is the hotel and country, but the attributes are whether the
-room contains a queen sized bed, wi-fi, allows pets.
+A better example would be searching for hotels in each country. The location is the hotel and country, but the attributes are whether the room contains a queen sized bed, wi-fi, allows pets.
 
 #### Breadcrumb Pitfall
 
-Don't force breadcrumbs on to your site. If they don't work in the way
-they were intended, don't use them.
+Don't force breadcrumbs on to your site. If they don't work in the way they were intended, don't use them.
